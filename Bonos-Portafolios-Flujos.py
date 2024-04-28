@@ -1,4 +1,4 @@
-import TP_Fechas as dt
+import Fechas as dt
 import pandas as pd
 import json
 import numpy as np
@@ -475,7 +475,9 @@ class bonos(fixed_income): #______________________CLASE BONOS___________________
         for fecha, tasa in list(self.specs['coupon_rates'].items()):
             self.specs['coupon_rates'][fecha] += bp5
         return self.specs['coupon_rates']
-    
+
+
+'''
 if __name__ == '__main__':
     
     amort = (100/3)/100
@@ -511,7 +513,7 @@ if __name__ == '__main__':
 
 
 
-
+'''
 
 
 
@@ -600,59 +602,59 @@ class inventario(): #__________________________CLASE INVENTARIO_________________
 
 
 #%%
-# if __name__ == '__main__':
-#     amort = (100/22)/100
-#     precio_usd =  14860/247.8
+if __name__ == '__main__':
+    amort = (100/22)/100
+    precio_usd =  14860/247.8
 
-#     #Amortizaciones
-#     first_amort_date = (9,7,2027) #Primera fecha de amortizacion
-#     aux = dt.date(first_amort_date, '30/360')
-#     amort_rates = {}
-#     n = 22 #Cantidad de amortizaciones
-#     for i in range(n):
-#         amort_rates[aux.fecha] = amort
-#         aux = aux.add2date(meses = 6)
+    #Amortizaciones
+    first_amort_date = (9,7,2027) #Primera fecha de amortizacion
+    aux = dt.date(first_amort_date, '30/360')
+    amort_rates = {}
+    n = 22 #Cantidad de amortizaciones
+    for i in range(n):
+        amort_rates[aux.fecha] = amort
+        aux = aux.add2date(meses = 6)
 
-#     #Specs del bono
-#     ae38 = bonos({'ticker': 'AE38',
-#                 'issue': (4,9,2020),
-#                 'maturity': (9,1,2038),
-#                 'first_coupon': (9,7,2021),
-#                 'accruing': (4,9,2020), #Inicio devengamiento
-#                 'first_coupon_type': 'LFC',
-#                 'face_value': precio_usd,
-#                 'residual_value': 100,
-#                 'frequency': 2,
-#                 'settlement': 0,
-#                 'daycount': '30/360',
-#                 'coupon_rates': {(4,9,2020):0.00125, (9,7,2021):0.02, (9,7,2022):0.03875,
-#                                 (9,7,2023):0.0425, (9,7,2024):0.05}, #A partir de esa fecha se utiliza la tasa cupon
-#                 'amort_rates': amort_rates,
-#                 'first_amort_date': (9,7,2027),
-#                 'amort_rate': amort,
-#                 'capit_rates': {}})
-#     cp170 = bonos({'ticker': 'CP170',
-#                 'issue': (27,5,2021),
-#                 'maturity': (8,3,2025),
-#                 'first_coupon': (8,3,2022),
-#                 'accruing': (27,5,2021), #Inicio devengamiento
-#                 'first_coupon_type': 'SFC',
-#                 'face_value': precio_usd,
-#                 'residual_value': 100,
-#                 'frequency': 2,
-#                 'settlement': 0,
-#                 'daycount': '30/360',
-#                 'coupon_rates': {(27,5,2021): 0.095}, #A partir de esa fecha se utiliza la tasa cupon
-#                 'amort_rates': {(8,9,2022):0.133, (8,3,2023):0.133, (8,9,2023):0.133,
-#                                 (8,3,2024):0.133, (8,9,2024):0.133, (8,3,2025):0.335},
-#                 'first_amort_date': (8,9,2022),
-#                 'amort_rate': amort,
-#                 'capit_rates': {}})
+    #Specs del bono
+    ae38 = bonos({'ticker': 'AE38',
+                'issue': (4,9,2020),
+                'maturity': (9,1,2038),
+                'first_coupon': (9,7,2021),
+                'accruing': (4,9,2020), #Inicio devengamiento
+                'first_coupon_type': 'LFC',
+                'face_value': precio_usd,
+                'residual_value': 100,
+                'frequency': 2,
+                'settlement': 0,
+                'daycount': '30/360',
+                'coupon_rates': {(4,9,2020):0.00125, (9,7,2021):0.02, (9,7,2022):0.03875,
+                                (9,7,2023):0.0425, (9,7,2024):0.05}, #A partir de esa fecha se utiliza la tasa cupon
+                'amort_rates': amort_rates,
+                'first_amort_date': (9,7,2027),
+                'amort_rate': amort,
+                'capit_rates': {}})
+    cp170 = bonos({'ticker': 'CP170',
+                'issue': (27,5,2021),
+                'maturity': (8,3,2025),
+                'first_coupon': (8,3,2022),
+                'accruing': (27,5,2021), #Inicio devengamiento
+                'first_coupon_type': 'SFC',
+                'face_value': precio_usd,
+                'residual_value': 100,
+                'frequency': 2,
+                'settlement': 0,
+                'daycount': '30/360',
+                'coupon_rates': {(27,5,2021): 0.095}, #A partir de esa fecha se utiliza la tasa cupon
+                'amort_rates': {(8,9,2022):0.133, (8,3,2023):0.133, (8,9,2023):0.133,
+                                (8,3,2024):0.133, (8,9,2024):0.133, (8,3,2025):0.335},
+                'first_amort_date': (8,9,2022),
+                'amort_rate': amort,
+                'capit_rates': {}})
     
-#     a = portfolio([ae38, cp170], [1,1])
-#     b = a.portfolio_df((14,6,2023))
-#     fixed = fixed_income(b, '30/360')
-#     precio =  (14860/247.8) + (38000/495.73)
-#     tir = fixed.tir(precio, (14,6,2023))
-#     print(a.inmunizacion(5, 100000, (14,6,2023), tir1 = 0.1486, tir2=0.07905, verificacion = True))
-#     #print(fixed.va(tir, (14,6,2023), True))
+    a = portfolio([ae38, cp170], [1,1])
+    b = a.portfolio_df((14,6,2023))
+    fixed = fixed_income(b, '30/360')
+    precio =  (14860/247.8) + (38000/495.73)
+    tir = fixed.tir(precio, (14,6,2023))
+    print(a.inmunizacion(5, 100000, (14,6,2023), tir1 = 0.1486, tir2=0.07905, verificacion = True))
+    #print(fixed.va(tir, (14,6,2023), True))
